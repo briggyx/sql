@@ -13,8 +13,14 @@ LIMIT 10;
 --WHERE
 /* 1. Write a query that returns all customer purchases of product IDs 4 and 9. */
 -- option 1
+SELECT * 
+FROM customer_purchases
+WHERE product_ID = 4 OR product_ID = 9;
 
 -- option 2
+SELECT * 
+FROM customer_purchases
+WHERE product_ID IN (4,9);
 
 /*2. Write a query that returns all customer purchases and a new calculated column 'price' (quantity * cost_to_customer_per_qty), 
 filtered by vendor IDs between 8 and 10 (inclusive) using either:
@@ -22,9 +28,14 @@ filtered by vendor IDs between 8 and 10 (inclusive) using either:
 	2.  one condition using BETWEEN
 */
 -- option 1
-
+SELECT *, quantity * cost_to_customer_per_qty AS price
+FROM customer_purchases
+WHERE vendor_id >= 8 AND vendor_id <= 10;
 
 -- option 2
+SELECT *, quantity * cost_to_customer_per_qty AS price
+FROM customer_purchases
+WHERE vendor_id BETWEEN 8 AND 10;
 
 --CASE
 /* 1. Products can be sold by the individual unit or by bulk measures like lbs. or oz. 
