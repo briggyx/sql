@@ -10,6 +10,26 @@ How many customers are there (y).
 Before your final group by you should have the product of those two queries (x*y).  */
 
 
+-- Step 1: CROSS JOIN between vendor_inventory and customers
+WITH cross_join_sales AS (
+    SELECT 
+        vi.vendor_id,
+        vi.product_id,
+        5 * vi.original_price AS total_sales_per_customer_per_product,
+        c.customer_id
+    FROM vendor_inventory vi
+    CROSS JOIN customer c
+)
+
+-- Step 2: Replace vendor_id and product_id with vendor_name and product_name, and calculate total sales
+SELECT 
+    v.vendor_name, 
+    p.product_name, 
+    COUNT(cjs.customer_id) * SUM(cjs.total_sales_per_customer_per_product) AS total_sales
+FROM cross_join_sales cjs
+JOIN vendor v ON cjs.vendor_id = v.vendor_id
+JOIN product p ON cjs.product_id = p.product_id
+GROUP BY v.vendor_name, p.product_name;
 
 -- INSERT
 /*1.  Create a new table "product_units". 
@@ -17,11 +37,22 @@ This table will contain only products where the `product_qty_type = 'unit'`.
 It should use all of the columns from the product table, as well as a new column for the `CURRENT_TIMESTAMP`.  
 Name the timestamp column `snapshot_timestamp`. */
 
-
+CREATE TABLE product_units AS
+SELECT 
+    product_id,
+    product_name,
+    product_size,
+    product_category_id,
+    product_qty_type,
+    CURRENT_TIMESTAMP AS snapshot_timestamp
+FROM product
+WHERE product_qty_type = 'unit';
 
 /*2. Using `INSERT`, add a new row to the product_units table (with an updated timestamp). 
 This can be any product you desire (e.g. add another record for Apple Pie). */
 
+INSERT INTO product_units (product_id, product_name, product_size, product_category_id, product_qty_type, snapshot_timestamp)
+VALUES (7, 'Apple Pie', '1 lb', 3, 'unit', CURRENT_TIMESTAMP);
 
 
 -- DELETE
@@ -29,7 +60,15 @@ This can be any product you desire (e.g. add another record for Apple Pie). */
 
 HINT: If you don't specify a WHERE clause, you are going to have a bad time.*/
 
-
+DELETE FROM product_units
+WHERE product_id = 7
+AND snapshot_timestamp = (
+    SELECT snapshot_timestamp
+    FROM product_units
+    WHERE product_id = 7
+    ORDER BY snapshot_timestamp ASC
+    LIMIT 1
+);
 
 -- UPDATE
 /* 1.We want to add the current_quantity to the product_units table. 
