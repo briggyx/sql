@@ -87,4 +87,24 @@ Finally, make sure you have a WHERE statement to update the right row,
 	you'll need to use product_units.product_id to refer to the correct row within the product_units table. 
 When you have all of these components, you can run the update statement. */
 
+-- Step 2: Update the current_quantity with the last known quantity from vendor_inventory
+
+ALTER TABLE product_units
+ADD current_quantity INT;
+
+
+UPDATE product_units
+SET current_quantity = (
+    SELECT COALESCE(vi.quantity, 0) -- If quantity is NULL, replace with 0
+    FROM vendor_inventory vi
+    WHERE vi.product_id = product_units.product_id
+    ORDER BY vi.market_date DESC -- Get the most recent quantity by market_date
+    LIMIT 1
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM vendor_inventory vi
+    WHERE vi.product_id = product_units.product_id
+);
+
 
