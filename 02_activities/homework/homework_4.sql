@@ -103,6 +103,33 @@ HINT: There are a possibly a few ways to do this query, but if you're struggling
 3) Query the second temp table twice, once for the best day, once for the worst day, 
 with a UNION binding them. */
 
+WITH TotalSalesByDate AS (
+    -- Step 1: Calculate total sales per market_date
+    SELECT 
+        market_date,
+        SUM(quantity * cost_to_customer_per_qty) AS total_sales
+    FROM customer_purchases
+    GROUP BY market_date
+),
+RankedSales AS (
+    -- Step 2: Rank days by total sales (both highest and lowest)
+    SELECT 
+        market_date,
+        total_sales,
+        RANK() OVER (ORDER BY total_sales DESC) AS best_day_rank,
+        RANK() OVER (ORDER BY total_sales ASC) AS worst_day_rank
+    FROM TotalSalesByDate
+)
+-- Step 3: Use UNION to combine best day and worst day
+SELECT market_date, total_sales, 'Best Day' AS sales_type
+FROM RankedSales
+WHERE best_day_rank = 1
+
+UNION
+
+SELECT market_date, total_sales, 'Worst Day' AS sales_type
+FROM RankedSales
+WHERE worst_day_rank = 1;
 
 
 
