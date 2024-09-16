@@ -17,7 +17,9 @@ The `||` values concatenate the columns into strings.
 Edit the appropriate columns -- you're making two edits -- and the NULL rows will be fixed. 
 All the other rows will remain the same.) */
 
-
+SELECT 
+product_name || ', ' || COALESCE(product_size, ' ') || ' (' || COALESCE(product_qty_type, 'unit') || ')' AS product_details
+FROM product;
 
 
 --Windowed Functions
