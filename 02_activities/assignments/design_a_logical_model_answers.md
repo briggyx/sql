@@ -47,30 +47,16 @@ Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
 ```
-Your answer...
+Observations of the AdventureWorks Schema:
+- There are significantly more tables, and they are organized by department 
+- Columns may act as both foreign and primary key
+- Unsure what U1, U2, etc... mean
+- The one-headed arrows seem ambiguous; are they all 1-many?
+- Not sure why some table columns are bolded, even though they're not indicated as PK, FK, or U
+
+Things I would change about my ERD based on observations of the AdventureWorks ERD:
+- Align my tables better so that their edges match up
+- Make sure that all of my arrows have either perfectly horizontal or vertical sections, for consistensy and visual order 
+- Group tables by theme/department, using lightly coloured blocks in the background, and label each group 
+- Indicate FK in addition to PK 
 ```
-
-## Criteria
-
-[Assignment Rubric](./assignment_rubric.md)
-
-# Submission Information
-
-🚨 **Please review our [Assignment Submission Guide](https://github.com/UofT-DSI/onboarding/blob/main/onboarding_documents/submissions.md)** 🚨 for detailed instructions on how to format, branch, and submit your work. Following these guidelines is crucial for your submissions to be evaluated correctly.
-
-### Submission Parameters:
-* Submission Due Date: `September 28, 2024`
-* The branch name for your repo should be: `model-design`
-* What to submit for this assignment:
-    * This markdown (design_a_logical_model.md) should be populated.
-    * Two Entity-Relationship Diagrams (preferably in a pdf, jpeg, png format).
-* What the pull request link should look like for this assignment: `https://github.com/<your_github_username>/sql/pull/<pr_id>`
-    * Open a private window in your browser. Copy and paste the link to your pull request into the address bar. Make sure you can see your pull request properly. This helps the technical facilitator and learning support staff review your submission easily.
-
-Checklist:
-- [ ] Create a branch called `model-design`.
-- [ ] Ensure that the repository is public.
-- [ ] Review [the PR description guidelines](https://github.com/UofT-DSI/onboarding/blob/main/onboarding_documents/submissions.md#guidelines-for-pull-request-descriptions) and adhere to them.
-- [ ] Verify that the link is accessible in a private browser window.
-
-If you encounter any difficulties or have questions, please don't hesitate to reach out to our team via our Slack at `#cohort-4-help`. Our Technical Facilitators and Learning Support staff are here to help you navigate any challenges.
