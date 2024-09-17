@@ -16,7 +16,13 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+Yes, retaining customer addresses, especially in Type 2, has privacy implications:
+
+- **Data Retention**: Historical addresses remain in the system even after updates, potentially violating data minimization laws like GDPR or CCPA, where customers can request data deletion.
+- **Data Breaches**: More stored addresses mean more sensitive data at risk in a breach, which could be exploited for fraud or identity theft.
+- **Compliance**: Retaining old addresses may require explicit consent, and companies must ensure compliance with privacy laws.
+
+Type 1 (overwrite) reduces exposure by only storing the current address but limits tracking of historical changes.
 ```
 
 ## Question 4
